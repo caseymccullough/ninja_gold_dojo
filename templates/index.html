@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='../static/style.css') }}">
+   <title>Document</title>
+</head>
+<body>
+   <h1>Ninja Gold</h1>
+   <div id="gold-container">
+      <label for="gold">$</label>
+      <input type="text" id="gold" value="{{session['gold']}}" readonly/>
+  </div>
+
+   <div id="menu-container">
+      <div class="menu-item">
+         <h3>Farm</h3>
+         <h4>(earns 10-20 golds)</h4>
+         <form action="/process_money" method="post">
+            <input type="hidden" name="building" value="farm" />
+            <input type="submit" value="Find Gold!"/>
+         </form>
+      </div>
+
+      <div class="menu-item">
+         <h3>Cave</h3>
+         <h4>(earns 5-10 golds)</h4>
+         <form action="/process_money" method="post">
+            <input type="hidden" name="building" value="cave" />
+            <input type="submit" value="Find Gold!"/>
+         </form>
+      </div>
+
+      <div class="menu-item">
+         <h3>House</h3>
+         <h4>(earns 2-5 golds)</h4>
+         <form action="/process_money" method="post">
+            <input type="hidden" name="building" value="house" />
+            <input type="submit" value="Find Gold!"/>
+         </form>
+      </div>
+
+      <div class="menu-item">
+         <h3>Casino</h3>
+         <h4>(earns / takes 0-50 golds)</h4>
+         <form action="/process_money" method="post">
+            <input type="hidden" name="building" value="casino" />
+            <input type="submit" value="Find Gold!"/>
+         </form>
+      </div>
+   </div>
+
+   <div id="activities">
+      <h3>Previous Moves:</h3>
+      <ul> 
+         {% for activity in session["activities"]|reverse %}
+         {{activity|safe}}
+         {% endfor %}
+      </ul>
+  </div>
+  
+   <button onclick="location.href='/reset'">Reset</button>
+
+   <div id="activities-container">
+      
+   </div>
+   
+</body>
+</html>
