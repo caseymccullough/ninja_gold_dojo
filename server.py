@@ -21,6 +21,7 @@ def default():
       print('creating session variables')
       session['gold'] = 0
       session['activities'] = []
+      session['move_count'] = 0
    return render_template('index.html')
 
 @app.route('/process_money', methods = ['POST'])
@@ -31,13 +32,14 @@ def process_money():
    gold_adjust = getRandNum(minMaxTuple[0], minMaxTuple[1])
    print(gold_adjust)
    session['gold'] += gold_adjust
+   session['move_count'] += 1
 
    activity_str = "<li"
    if gold_adjust > 0:
       activity_str += ' class= "win"> '
    elif gold_adjust < 0:
       activity_str += ' class= "loss"> '
-   activity_str += f"{building_selected} for {gold_adjust} for new total of {session['gold']} </li>"
+   activity_str += f"Move #{session['move_count']}: Went to {building_selected} for {gold_adjust} for new total of {session['gold']} </li>"
    
    print ("new activity", activity_str)
    session['activities'].append(activity_str)
